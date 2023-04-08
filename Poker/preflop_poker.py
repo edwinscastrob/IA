@@ -1,11 +1,41 @@
 
+import csv
+import numpy as np
 
 '''
 Manos posibles Preflop 
 o diferente palo
 s mismo palo
 '''
-hands = ['AA', 'KK', 'QQ', 'JJ', 'TT', '99', '88', '77', '66', '55', '44', '33', '22', 'AKs', 'AQs', 'AJs', 'ATs', 'A9s', 'A8s', 'A7s', 'A6s', 'A5s', 'A4s', 'A3s', 'A2s', 'AKo', 'AQo', 'AJo', 'ATo', 'A9o', 'A8o', 'A7o', 'A6o', 'A5o', 'A4o', 'A3o', 'A2o', 'KQs', 'KJs', 'KTs', 'K9s', 'K8s', 'K7s', 'K6s', 'K5s', 'K4s', 'K3s', 'K2s', 'KQo', 'KJo', 'KTo', 'K9o', 'K8o', 'K7o', 'K6o', 'K5o', 'K4o', 'K3o', 'K2o', 'QJs', 'QTs', 'Q9s', 'Q8s', 'Q7s', 'Q6s', 'Q5s', 'Q4s', 'Q3s', 'Q2s', 'QJo', 'QTo', 'Q9o', 'Q8o', 'Q7o', 'Q6o', 'Q5o', 'Q4o', 'Q3o', 'Q2o', 'JTs', 'J9s', 'J8s', 'J7s', 'J6s', 'J5s', 'J4s', 'J3s', 'J2s', 'JTo', 'J9o', 'J8o', 'J7o', 'J6o', 'J5o', 'J4o', 'J3o', 'J2o', 'T9s', 'T8s', 'T7s', 'T6s', 'T5s', 'T4s', 'T3s', 'T2s', 'T9o', 'T8o', 'T7o', 'T6o', 'T5o', 'T4o', 'T3o', 'T2o', '98s', '97s', '96s', '95s', '94s', '93s', '92s', '98o', '97o', '96o', '95o', '94o', '93o', '92o', '87s', '86s', '85s', '84s', '83s', '82s', '87o', '86o', '85o', '84o', '83o', '82o']
+# Crear matriz de rango de manos de poker
+hands = np.array([
+    ['AA', 'AKS', 'AQS', 'AJS', 'ATS', 'A9S', 'A8S',
+        'A7S', 'A6S', 'A5S', 'A4S', 'A3S', 'A2S'],
+    ['AKO', 'KK', 'KQS', 'KJS', 'KTS', 'K9S', 'K8S',
+        'K7S', 'K6S', 'K5S', 'K4S', 'K3S', 'K2S'],
+    ['AQO', 'KQO', 'QQ', 'QJS', 'QTS', 'Q9S', 'Q8S',
+        'Q7S', 'Q6S', 'Q5S', 'Q4S', 'Q3S', 'Q2S'],
+    ['AJO', 'KJO', 'QJO', 'JJ', 'JTS', 'J9S', 'J8S',
+        'J7S', 'J6S', 'J5S', 'J4S', 'J3S', 'J2S'],
+    ['ATO', 'KTO', 'QTO', 'JTO', 'TT', 'T9S', 'T8S',
+        'T7S', 'T6S', 'T5S', 'T4S', 'T3S', 'T2S'],
+    ['A9O', 'K9O', 'Q9O', 'J9O', 'T9O', '99', '98S',
+        '97S', '96S', '95S', '94S', '93S', '92S'],
+    ['A8O', 'K8O', 'Q8O', 'J8O', 'T8O', '98O', '88',
+        '87S', '86S', '85S', '84S', '83S', '82S'],
+    ['A7O', 'K7O', 'Q7O', 'J7O', 'T7O', '97O', '87O',
+        '77', '76S', '75S', '74S', '73S', '72S'],
+    ['A6O', 'K6O', 'Q6O', 'J6O', 'T6O', '96O', '86O',
+        '76O', '66', '65S', '64S', '63S', '62S'],
+    ['A5O', 'K5O', 'Q5O', 'J5O', 'T5O', '95O', '85O',
+        '75O', '65O', '55', '54S', '53S', '52S'],
+    ['A4O', 'K4O', 'Q4O', 'J4O', 'T4O', '94O', '84O',
+        '74O', '64O', '54O', '44', '43S', '42S'],
+    ['A3O', 'K3O', 'Q3O', 'J3O', 'T3O', '93O', '83O',
+        '73O', '63O', '53O', '43O', '33', '32S'],
+    ['A2O', 'K2O', 'Q2O', 'J2O', 'T2O', '92O', '82O',
+        '72O', '62O', '52O', '42O', '32O', '22']
+], dtype=str)
 
 '''
 Posiciones ordenadas en accion despues de apuesta minimas
@@ -16,17 +46,23 @@ posiciones = ['UTG', 'UTG+1', 'MP1', 'MP2', 'HJ', 'CO', 'BTN', 'SB', 'BB']
 '''
 estados del juego antes de apostar en el preflop
 '''
-estado=['Open Raise', 'Raise over limpers', '3BET/CALL', 'CALL VS OPEN-PUSH', 'SQUEEZE/CALL', 'COLD4BET/FARHA']
+estado = ['Open Raise', 'Raise over limpers', '3BET/CALL',
+          'CALL VS OPEN-PUSH', 'SQUEEZE/CALL', 'COLD4BET/FARHA']
+
+# metodos
 
 
-#metodos
-
-#revisar que mano ingresada existe
+# revisar que mano ingresada existe
 def check_hand(hand):
-    return hand.upper() in hands
+    for row in hands:
+        if hand.upper() in row:
+            return True
+    return False
 
+
+# determinar tipo de posicion
 def determinar_posicion(posicion):
-    posicion=posicion.upper()
+    posicion = posicion.upper()
     if posicion.upper() in posiciones[:3]:
         return "Temprana"
     elif posicion in posiciones[3:5]:
@@ -37,8 +73,27 @@ def determinar_posicion(posicion):
         return "Posición inválida"
 
 
+# convertir csv a matrix
+def csv_to_matrix(filename):
+    with open(filename) as csvfile:
+        reader = csv.reader(csvfile, delimiter=';')
+        data = []
+        for row in reader:
+            data.append(row)
+    return np.array(data, dtype=str)
 
 
 
+def AccionBaseMano(hand, matriz_Acciones):
+
+    posicion = np.argwhere(hands == hand.upper())[0]
+    return matriz_Acciones[posicion[0],posicion[1]]
+
+# main
+
+# cargar csv
+sb_OpenRaise = csv_to_matrix('openraise.csv')
+opcion = AccionBaseMano("22",sb_OpenRaise)
+print(opcion)
 
 
