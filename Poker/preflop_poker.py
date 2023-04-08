@@ -83,17 +83,38 @@ def csv_to_matrix(filename):
     return np.array(data, dtype=str)
 
 
-
 def AccionBaseMano(hand, matriz_Acciones):
 
     posicion = np.argwhere(hands == hand.upper())[0]
-    return matriz_Acciones[posicion[0],posicion[1]]
+    return matriz_Acciones[posicion[0], posicion[1]]
+
+
+def OpenRaisePosicion(posicion):
+    posicion=posicion.upper()
+    switcher = {
+        'UTG': sb_OpenRaise_UTG,
+        'UTG+1': sb_OpenRaise_UTG1,
+        'MP1': sb_OpenRaise_MP1,
+        'MP2': sb_OpenRaise_MP2,
+        'HJ': sb_OpenRaise_HJ,
+        'CO': sb_OpenRaise_CO,
+        'BTN': sb_OpenRaise_BTN,
+        'SB': sb_OpenRaise_SB,
+        'BB': sb_OpenRaise_BB,
+    }
+    return switcher.get(posicion, None)
 
 # main
 
 # cargar csv
-sb_OpenRaise = csv_to_matrix('openraise.csv')
-opcion = AccionBaseMano("22",sb_OpenRaise)
-print(opcion)
+sb_OpenRaise_UTG = csv_to_matrix('openraise_UTG.csv')
+sb_OpenRaise_UTG1 = csv_to_matrix('openraise_UTG+1.csv')
+sb_OpenRaise_MP1 = csv_to_matrix('openraise_MP1.csv')
+sb_OpenRaise_MP2 = csv_to_matrix('openraise_MP2.csv')
+sb_OpenRaise_HJ = csv_to_matrix('openraise_HJ.csv')
+sb_OpenRaise_CO = csv_to_matrix('openraise_CO.csv')
+sb_OpenRaise_BTN = csv_to_matrix('openraise_BTN.csv')
+sb_OpenRaise_SB = csv_to_matrix('openraise_SB.csv')
+sb_OpenRaise_BB = csv_to_matrix('openraise_BB.csv')
 
-
+AccionBaseMano("64s",OpenRaisePosicion("btn"))
