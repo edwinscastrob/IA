@@ -117,4 +117,4 @@ sb_OpenRaise_BTN = csv_to_matrix('openraise_BTN.csv')
 sb_OpenRaise_SB = csv_to_matrix('openraise_SB.csv')
 sb_OpenRaise_BB = csv_to_matrix('openraise_BB.csv')
 
-AccionBaseMano("64s",OpenRaisePosicion("btn"))
+AccionBaseMano("22 ",OpenRaisePosicion("co"))
