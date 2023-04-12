@@ -46,7 +46,7 @@ posiciones = ['UTG', 'UTG+1', 'MP1', 'MP2', 'HJ', 'CO', 'BTN', 'SB', 'BB']
 '''
 estados del juego antes de apostar en el preflop
 '''
-estado = ['Open Raise', 'Raise over limpers', '3BET/CALL',
+estado = ['Open Raise','Raise over limpers', '3BET/CALL',
           'CALL VS OPEN-PUSH', 'SQUEEZE/CALL', 'COLD4BET/FARHA']
 
 # metodos
@@ -117,4 +117,4 @@ sb_OpenRaise_BTN = csv_to_matrix('openraise_BTN.csv')
 sb_OpenRaise_SB = csv_to_matrix('openraise_SB.csv')
 sb_OpenRaise_BB = csv_to_matrix('openraise_BB.csv')
 
-AccionBaseMano("22 ",OpenRaisePosicion("co"))
+
